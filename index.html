@@ -19,10 +19,28 @@
             overflow-x: hidden;
         }
 
+        /* Scroll Progress */
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: transparent;
+            z-index: 1001;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #ffffff;
+            width: 0;
+            transition: width 0.1s ease;
+        }
+
         /* Navigation */
         nav {
             position: fixed;
-            top: 0;
+            top: 4px;
             width: 100%;
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(20px);
@@ -55,6 +73,11 @@
         nav a:hover {
             background: rgba(255, 255, 255, 0.2);
             transform: translateY(-2px);
+        }
+
+        nav a.active {
+            background: rgba(255, 255, 255, 0.3);
+            color: #fff;
         }
 
         /* Hero Section */
@@ -162,6 +185,14 @@
             padding: 4rem 5%;
             max-width: 1200px;
             margin: 0 auto;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         h2 {
@@ -222,6 +253,44 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
+        /* Qualifications Section */
+        .qualifications-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .qualification-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .qualification-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .qualification-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .qualification-card .institution {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
+        }
+
+        .qualification-card .year {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
         /* Projects Section */
         .projects-grid {
             display: grid;
@@ -253,6 +322,21 @@
             margin-bottom: 1.5rem;
             opacity: 0.9;
             line-height: 1.6;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tech-tag {
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: 500;
         }
 
         .project-link {
@@ -355,7 +439,7 @@
                 padding: 1.5rem;
             }
 
-            .projects-grid {
+            .projects-grid, .qualifications-grid {
                 grid-template-columns: 1fr;
                 gap: 1.5rem;
             }
@@ -413,11 +497,17 @@
     </style>
 </head>
 <body>
+    <!-- Scroll Progress -->
+    <div class="progress-container">
+        <div class="progress-bar"></div>
+    </div>
+
     <!-- Navigation -->
     <nav>
         <ul>
-            <li><a href="#home">Home</a></li>
+            <li><a href="#home" class="active">Home</a></li>
             <li><a href="#about">About</a></li>
+            <li><a href="#qualifications">Qualifications</a></li>
             <li><a href="#projects">Projects</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
@@ -427,10 +517,7 @@
     <section id="home" class="hero">
         <div class="hero-content">
             <div class="profile-image-container">
-                <!-- Replace with your image URL -->
                 <img src="manish-profile.jpg" alt="Manish" class="profile-image">
-                <!-- Or use placeholder: -->
-                <!-- <div class="profile-placeholder">👤</div> -->
             </div>
             <h1>Hi, I'm Manish</h1>
             <p>Full Stack Developer | Problem Solver</p>
@@ -461,6 +548,28 @@
         </div>
     </section>
 
+    <!-- Qualifications Section -->
+    <section id="qualifications">
+        <h2>Qualifications</h2>
+        <div class="qualifications-grid">
+            <div class="qualification-card">
+                <h3>10th</h3>
+                <div class="institution">Arya Sen. Sec. Siksha Sadan</div>
+                <div class="year">2019 - 2020</div>
+            </div>
+            <div class="qualification-card">
+                <h3>12th</h3>
+                <div class="institution">Arya Sen. Sec. Siksha Sadan</div>
+                <div class="year">2020 - 2021</div>
+            </div>
+            <div class="qualification-card">
+                <h3>Bachelor Of Computer Application</h3>
+                <div class="institution">DCRUST University</div>
+                <div class="year">2023 - 2026</div>
+            </div>
+        </div>
+    </section>
+
     <!-- Projects Section -->
     <section id="projects">
         <h2>Featured Projects</h2>
@@ -468,16 +577,31 @@
             <div class="project-card">
                 <h3>Project One</h3>
                 <p>A modern web application built with React and Node.js that helps users manage their daily tasks efficiently.</p>
+                <div class="tech-stack">
+                    <span class="tech-tag">React</span>
+                    <span class="tech-tag">Node.js</span>
+                    <span class="tech-tag">MongoDB</span>
+                </div>
                 <a href="#" class="project-link">View Project →</a>
             </div>
             <div class="project-card">
                 <h3>Project Two</h3>
                 <p>An interactive data visualization dashboard showcasing real-time analytics with beautiful charts and graphs.</p>
+                <div class="tech-stack">
+                    <span class="tech-tag">D3.js</span>
+                    <span class="tech-tag">React</span>
+                    <span class="tech-tag">Express</span>
+                </div>
                 <a href="#" class="project-link">View Project →</a>
             </div>
             <div class="project-card">
                 <h3>Project Three</h3>
                 <p>A responsive e-commerce platform featuring seamless user experience and secure payment integration.</p>
+                <div class="tech-stack">
+                    <span class="tech-tag">React</span>
+                    <span class="tech-tag">Stripe</span>
+                    <span class="tech-tag">Node.js</span>
+                </div>
                 <a href="#" class="project-link">View Project →</a>
             </div>
         </div>
@@ -489,7 +613,7 @@
         <div class="contact-content">
             <p>I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision.</p>
             <div class="contact-links">
-                <a href="manish93506@gmail.com" class="contact-link">Email Me</a>
+                <a href="https://mail.google.com/" class="contact-link">Email Me</a>
                 <a href="https://github.com/Manish9350" class="contact-link">GitHub</a>
                 <a href="https://linkedin.com/in/manishverma2003" class="contact-link">LinkedIn</a>
             </div>
@@ -514,6 +638,48 @@
                     });
                 }
             });
+        });
+
+        // Active navigation state
+        const navLinks = document.querySelectorAll('nav a');
+        const sections = document.querySelectorAll('section');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 60) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Scroll progress
+        window.addEventListener('scroll', () => {
+            const winScroll = document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.querySelector('.progress-bar').style.width = scrolled + '%';
+        });
+
+        // Section fade-in animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        sections.forEach(section => {
+            observer.observe(section);
         });
     </script>
 </body>
